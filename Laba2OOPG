@@ -1,0 +1,302 @@
+Программа 1.
+#include <iostream>
+
+class Point {
+public:
+    double x;
+    double y;
+
+    // Метод для вывода координат
+    void printCoordinates() const {
+        std::cout << "x: " << x << ", y: " << y << std::endl;
+    }
+};
+int main() {
+    // Статическое создание
+    Point p1;
+    p1.x = 10;
+    p1.y = 11;
+    p1.printCoordinates();
+
+    // Динамическое создание
+    Point* p2 = new Point();
+    p2->x = 3.14; // Доступ к членам через -> для указателя
+    p2->y = 45;
+    p2->printCoordinates();
+
+    // Обязательно удаляем динамически созданный объект!
+    delete p2;
+
+    return 0;
+}
+
+Программа 2
+#include <iostream>
+#include <string>
+
+class Person {
+private:
+    std::string name;
+    int age;
+
+public:
+    // Конструктор с параметрами
+    Person(const std::string& n, int a) : name(n), age(a) {
+        std::cout << "Конструктор вызван для " << name << std::endl;
+    }
+
+    // Деструктор
+    ~Person() {
+        std::cout << "Деструктор вызван для " << name << std::endl;
+    }
+
+    // Метод для отображения информации о человеке
+    void display() const {
+        std::cout << "ИМЯ: " << name << ", Возраст: " << age << std::endl;
+    }
+};
+
+int main() {
+    // Создание объекта класса Person
+    Person person1("Aнна", 30);
+    person1.display();
+
+    {
+        // Создание объекта внутри блока
+        // вызов методов и атрибутов
+        Person person2("Сергей", 25);
+        person2.display();
+    } // person2 будет уничтожен здесь
+
+    return 0;
+}
+
+Программа 3
+#include <iostream>
+
+class Car {
+public:
+    // Члены данных класса
+    std::string brand;
+    int year;
+
+    // Конструктор без параметров
+    Car() {
+        brand = "Unknown";
+        year = 0;
+    }
+
+    // Метод для вывода информации о машине
+    void display() {
+        std::cout << "Brand: " << brand << ", Year: " << year << std::endl;
+    }
+};
+
+int main() {
+    // Создание объекта класса Car с использованием конструктора без параметров
+    Car nCar;
+
+    // Вывод информации о машине
+    nCar.display(); // Вывод: Brand: Unknown, Year: 0
+
+    return 0;
+}
+
+Программа 4
+#include <iostream>
+
+// Базовый класс
+class Animal {
+public:
+    void speak() {
+        std::cout << "Животное разговаривает" << std::endl;
+    }
+};
+
+// Класс-наследник Dog
+class Dog : public Animal {
+public:
+    void speak() {
+        std::cout << "Собака гавкает" << std::endl;
+    }
+};
+
+// Класс-наследник Cat
+class Cat : public Animal { 
+public:
+    void speak() {
+        std::cout << "Кот мяукает" << std::endl;
+    }
+};
+
+int main() {
+    Animal animal; //ввод класс класс
+    Dog dog; // ввод тип класса тип класса
+    Cat cat; // ввод тип класса тип класса
+
+    animal.speak();  //вывод
+    dog.speak(); 
+    cat.speak();
+
+    return 0;
+}
+
+Программа 5
+#include <iostream>
+
+class Car {
+public:
+    // Члены данных класса
+    std::string brand;
+    int year;
+
+    // Конструктор без параметров
+    Car() {
+        brand = "Неизвестно";
+        year = 0;
+    }
+
+    // Метод для вывода информации о машине
+    void display() {
+        std::cout << "Бренд: " << brand << ", Год выпуска: " << year << std::endl;
+    }
+};
+
+int main() {
+    // Создание объекта класса Car с использованием конструктора без параметров
+    Car nCar;
+
+    // Вывод информации о машине
+    nCar.display(); // Вывод: Brand: Unknown, Year: 0
+
+    return 0;
+}
+
+Программа 6
+class Point {
+  private :
+            int x;
+            int y;
+  public :
+          Point() : x(0) , y(0) {
+          }
+          Point(int x, int y) : x(x) , y(y) {
+          }
+      Point(const Point &a) : x(a .x) , y(a .y) {
+    }
+};
+
+Программа 7
+#include <iostream>
+#include <string>
+
+class MyBase {
+public:
+    MyBase(int x) : baseValue(x) { // Инициализация в списке
+        std::cout << "MyBase constructor вызван с размером " << baseValue << std::endl;
+    }
+
+    void show() const {
+        std::cout << "Base value: " << baseValue << std::endl;
+    }
+
+private:
+    int baseValue;
+};
+
+class MyDeriv : public MyBase {
+public:
+    MyDeriv(int x, const std::string& name) : MyBase(x), derivName(name) { // Инициализация базового класса
+        std::cout << "MyDeriv constructor вызван с именем: " << derivName << std::endl;
+    }
+
+    void show() const {
+        MyBase::show(); // Вызов метода базового класса
+        std::cout << "полученное имя: " << derivName << std::endl;
+    }
+
+private:
+    std::string derivName;
+};
+
+int main() {
+    MyDeriv obj(100, "DerivedObject");
+    obj.show();
+
+    return 0;
+}
+
+Программа 8
+MyBase* obj1 = new MyBase(); // Создание объекта базового класса
+MyBase* obj2 = new MyDeriv(30, "DerivedObject"); // Создание объекта производного класса
+
+obj1->show(); // Вызов метода базового класса
+obj2->show(); // Вызов метода базового класса (но на самом деле это объект MyDeriv)
+
+delete obj1; // Освобождение памяти
+delete obj2; // Освобождение памяти
+
+Программа 9
+#include <iostream>
+
+class B {
+public:
+    B() { std::cout << "Объект B создан." << std::endl; }
+    ~B() { std::cout << "Объект B уничтожен." << std::endl; }
+    void display() const { std::cout << "Метод класса B" << std::endl; }
+};
+
+class A {
+public:
+    A() : b() { // Конструктор класса A создает объект B
+        std::cout << "Объект A создан." << std::endl;
+    }
+    ~A() { // Деструктор класса A автоматически уничтожает объект B
+        std::cout << "Объект A уничтожен." << std::endl;
+    }
+    
+    void useB() {
+        b.display();
+    }
+
+private:
+    B b; // Объект класса B как член класса A
+};
+
+int main() {
+    A a; // Создается объект A, который создает объект B
+    a.useB(); // Вызов метода объекта B
+    return 0;
+}
+
+Программа 10
+#include <iostream>
+
+class MyClass {
+public:
+    MyClass() { std::cout << "MyClass Constructor\n"; }
+    ~MyClass() { std::cout << "MyClass Destructor\n"; }
+};
+
+void createStaticObject() {
+    MyClass obj; // Статически созданный объект
+} // Объект будет уничтожен при выходе из области видимости
+
+int main() {
+    createStaticObject(); // Вызов функции
+    return 0;
+}
+Уничтожение динамически созданных объектов
+#include <iostream>
+
+class MyClass {
+public:
+    MyClass() { std::cout << "MyClass Constructor\n"; }
+    ~MyClass() { std::cout << "MyClass Destructor\n"; }
+};
+
+int main() {
+    MyClass* obj = new MyClass(); // Динамически созданный объект
+    delete obj; // Уничтожение объекта
+    return 0;
+}
