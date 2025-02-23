@@ -1,4 +1,4 @@
-Программа 1.
+#Программа 1.
 #include <iostream>
 
 class Point {
